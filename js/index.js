@@ -20,6 +20,14 @@
 
 function renderizarDatosUsuario(datos) {
   // Escribe aquí tu código para mostrar la foto, nombre completo e email en div.tarjeta
+  const usuario = datos.results[0];
+
+  const tarjeta = document.querySelector('.tarjeta');
+
+  tarjeta.innerHTML = ` <img src="${usuario.picture.large}" alt="Foto de perfil">
+    <h2>${usuario.name.title} ${usuario.name.first} ${usuario.name.last}</h2>
+    <p>${usuario.email}</p> `;
+
 }
 
 /* -------------------------------- CONSIGNA 2 -------------------------------- */
@@ -30,4 +38,17 @@ function renderizarDatosUsuario(datos) {
 
 function cargarUsuario() {
   // Escribe aquí tu código para realizar un nuevo pedido a la API y actualizar la tarjeta
+
+    try {
+      const response = await fetch('http://localhost:3000/api/user');
+
+      const datos = await response.json();
+
+      renderizarDatosUsuario(datos);
+
+    } catch (error) {
+
+      console.error("Hubo un error al cargar al usuario: ", error);
+    }
 }
+cargarUsuario();
